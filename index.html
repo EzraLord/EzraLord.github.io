@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Ezra Godson builds websites for small businesses. Get a free demo of your site before you pay.">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Ezra Godson Web Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..800&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a working page for a local web builder. Hero = live demo builder in a phone; then tools (quote, checkup, refresh slider) on a fog-grey sheet with path-style section labels. */
+:root{
+  --bg:#EDF0EE; --surface:#FFFFFF; --sunk:#E2E7E4; --ink:#132320; --muted:#566661; --line:#CBD5D0;
+  --accent:#2B45E0; --accent-ink:#FFFFFF; --mark:#FFC233; --mark-ink:#132320;
+  --good:#1E8A52; --warn:#B7791F; --bad:#C43D3D;
+  --display:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --body:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'Geist Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
+  --m-bg:#fff; --m-fg:#16181d; --m-accent:#1f6feb; --m-soft:#eef3fb; --m-on:#fff;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0C1412; --surface:#141F1C; --sunk:#0F1916; --ink:#E4ECE8; --muted:#9AABA5; --line:#2A3833;
+  --accent:#8597FF; --accent-ink:#0C1412; --mark:#FFC233; --mark-ink:#132320;
+  --good:#4CC384; --warn:#E3A84B; --bad:#F07171; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0C1412; --surface:#141F1C; --sunk:#0F1916; --ink:#E4ECE8; --muted:#9AABA5; --line:#2A3833;
+  --accent:#8597FF; --accent-ink:#0C1412; --mark:#FFC233; --mark-ink:#132320;
+  --good:#4CC384; --warn:#E3A84B; --bad:#F07171; color-scheme:dark }
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1140px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);line-height:1.04;letter-spacing:-.035em;text-wrap:balance;margin:0}
+p{margin:0}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+.mono{font-family:var(--mono)}
+.eyebrow{font-family:var(--mono);font-size:.78rem;letter-spacing:.06em;color:var(--muted);text-transform:lowercase}
+.eyebrow b{color:var(--accent);font-weight:500}
+
+/* header */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:16px;height:62px}
+.brand{display:flex;align-items:baseline;gap:8px;text-decoration:none;margin-right:auto;white-space:nowrap}
+.brand strong{font-family:var(--display);font-size:1.25rem;font-weight:800;letter-spacing:-.02em}
+.brand span{font-family:var(--mono);font-size:.75rem;color:var(--muted)}
+nav.links{display:flex;gap:4px}
+nav.links a{text-decoration:none;font-size:.92rem;padding:6px 10px;border-radius:8px;color:var(--muted)}
+nav.links a:hover{color:var(--ink);background:var(--sunk)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:10px;padding:11px 18px;font-weight:600;cursor:pointer;text-decoration:none;transition:transform .15s,background .15s}
+.btn-primary{background:var(--accent);color:var(--accent-ink)}
+.btn-primary:hover{transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn-ghost:hover{background:var(--surface)}
+.icon-btn{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:transparent;cursor:pointer;display:grid;place-items:center;flex:none}
+.icon-btn svg{width:18px;height:18px;stroke:var(--ink);fill:none;stroke-width:2}
+@media (max-width:900px){nav.links{display:none}}
+@media (max-width:480px){.bar .btn-primary{display:none}}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:56px;align-items:center;padding-block:56px 64px}
+.hero h1{font-size:clamp(2.6rem,6.4vw,4.9rem);font-weight:800}
+.hl{background:linear-gradient(transparent 58%,var(--mark) 58%,var(--mark) 92%,transparent 92%);padding:0 .06em}
+.lede{font-size:1.15rem;color:var(--muted);max-width:54ch;margin-top:20px}
+.facts{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:22px;font-family:var(--mono);font-size:.85rem}
+.facts span::before{content:"✓";color:var(--good);margin-right:6px}
+
+.builder{margin-top:30px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:grid;gap:14px}
+.builder-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.builder-head h2{font-size:1.25rem}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:520px){.row{grid-template-columns:1fr}}
+label.f{display:grid;gap:5px;font-size:.82rem;font-weight:600;color:var(--muted)}
+input[type=text],input[type=number],select,textarea{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:10px 12px;font-size:1rem;color:var(--ink)}
+textarea{resize:vertical;min-height:96px}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:0;border-color:transparent}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.chip span{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border:1px solid var(--line);border-radius:99px;font-size:.88rem;font-weight:500}
+.chip i{width:14px;height:14px;border-radius:50%;display:inline-block;border:1px solid rgba(127,127,127,.4)}
+.chip input:checked + span{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.chip input:focus-visible + span{outline:3px solid var(--accent);outline-offset:2px}
+
+/* phone */
+.stage{display:grid;justify-items:center;gap:14px}
+.phone{width:min(330px,100%);aspect-ratio:9/18.5;max-width:100%;border-radius:42px;background:#0b0d0e;padding:11px;box-shadow:0 30px 60px -25px rgba(10,30,25,.45),0 0 0 1px var(--line);position:relative}
+.phone::before{content:"";position:absolute;top:19px;left:50%;transform:translateX(-50%);width:90px;height:24px;background:#0b0d0e;border-radius:20px;z-index:3}
+.screen{height:100%;border-radius:32px;overflow:hidden auto;background:var(--m-bg);color:var(--m-fg);font-family:var(--body);scrollbar-width:none;transition:background .3s,color .3s}
+.screen::-webkit-scrollbar{display:none}
+.urlbar{position:sticky;top:0;z-index:2;padding:44px 14px 8px;background:var(--m-bg);transition:background .3s}
+.urlbar div{font-family:var(--mono);font-size:11px;background:var(--m-soft);border-radius:8px;padding:6px 10px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.85}
+.m-nav{display:flex;justify-content:space-between;align-items:center;padding:8px 18px}
+.m-nav b{font-family:var(--display);font-size:15px;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:80%}
+.m-burger{display:grid;gap:3px}.m-burger i{display:block;width:16px;height:2px;background:var(--m-fg);border-radius:2px}
+.m-hero{padding:22px 18px 24px;display:grid;gap:10px}
+.m-status{justify-self:start;font-size:11px;font-weight:600;padding:4px 9px;border-radius:99px;background:var(--m-soft);display:inline-flex;gap:6px;align-items:center}
+.m-status::before{content:"";width:7px;height:7px;border-radius:50%;background:#c43d3d}
+.m-status.on::before{background:#1e9a5a}
+.m-hero h3{font-size:30px;line-height:1;letter-spacing:-.025em;overflow-wrap:anywhere}
+.m-hero p{font-size:13px;opacity:.8}
+.m-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.m-btn{font-size:12.5px;font-weight:700;padding:10px 14px;border-radius:10px;background:var(--m-accent);color:var(--m-on)}
+.m-btn.alt{background:transparent;color:var(--m-fg);box-shadow:inset 0 0 0 1.5px currentColor}
+.m-sec{padding:16px 18px;border-top:1px solid color-mix(in srgb,var(--m-fg) 12%,transparent)}
+.m-sec h4{margin:0 0 10px;font-family:var(--display);font-size:16px}
+.m-list{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:13px}
+.m-list li{display:flex;justify-content:space-between;gap:10px;padding-bottom:8px;border-bottom:1px dashed color-mix(in srgb,var(--m-fg) 18%,transparent)}
+.m-list li span:last-child{font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.m-sec small{display:block;font-size:10.5px;opacity:.55;margin-top:8px}
+.m-hours{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:12.5px;font-variant-numeric:tabular-nums}
+.m-hours .today{font-weight:700;color:var(--m-accent)}
+.m-map{height:96px;border-radius:12px;margin-top:8px;background:
+  linear-gradient(90deg,transparent 46%,color-mix(in srgb,var(--m-fg) 14%,transparent) 46% 50%,transparent 50%),
+  linear-gradient(0deg,transparent 60%,color-mix(in srgb,var(--m-fg) 14%,transparent) 60% 64%,transparent 64%),
+  linear-gradient(35deg,transparent 30%,color-mix(in srgb,var(--m-fg) 9%,transparent) 30% 33%,transparent 33%),
+  var(--m-soft);position:relative}
+.m-map::after{content:"";position:absolute;left:47%;top:34%;width:16px;height:16px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--m-accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--m-accent) 25%,transparent)}
+.m-foot{padding:16px 18px 28px;font-size:10.5px;opacity:.55}
+.stage-note{font-family:var(--mono);font-size:.78rem;color:var(--muted);text-align:center}
+
+/* sections */
+section.block{padding-block:72px;border-top:1px solid var(--line)}
+.sec-head{display:grid;gap:12px;margin-bottom:34px;max-width:720px}
+.sec-head h2{font-size:clamp(2rem,4.4vw,3.2rem);font-weight:750}
+.sec-head p{color:var(--muted);font-size:1.06rem;max-width:60ch}
+
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;counter-reset:s;border-top:2px solid var(--ink)}
+.step{padding:20px 20px 0 0;min-width:0}
+.step + .step{padding-left:20px;border-left:1px solid var(--line)}
+.step .n{font-family:var(--mono);font-size:.8rem;color:var(--accent)}
+.step h3{font-size:1.35rem;margin:10px 0 8px}
+.step p{color:var(--muted);font-size:.95rem}
+@media (max-width:860px){.steps{grid-template-columns:1fr 1fr}.step:nth-child(3){border-left:0;padding-left:0}.step{padding-bottom:20px}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}.step + .step{border-left:0;padding-left:0;border-top:1px solid var(--line)}}
+
+/* quote */
+.quote{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:28px;align-items:start}
+@media (max-width:880px){.quote{grid-template-columns:1fr}}
+.opts{display:grid;gap:10px}
+.opt{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;cursor:pointer}
+.opt.locked{cursor:default}
+.opt input[type=checkbox]{width:20px;height:20px;accent-color:var(--accent);margin:0}
+.opt .t{font-weight:600}
+.opt .d{font-size:.88rem;color:var(--muted)}
+.opt .p{font-family:var(--mono);font-size:.9rem;white-space:nowrap;font-variant-numeric:tabular-nums}
+.opt-group{font-family:var(--mono);font-size:.75rem;letter-spacing:.06em;color:var(--muted);margin:14px 0 2px}
+.stepper{display:flex;align-items:center;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.stepper button{width:34px;height:34px;border:0;background:var(--bg);cursor:pointer;font-size:1.1rem}
+.stepper output{width:34px;text-align:center;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.receipt{position:sticky;top:calc(env(safe-area-inset-top,0px) + 80px);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px;display:grid;gap:16px}
+.receipt h3{font-size:1.2rem}
+.lines{font-family:var(--mono);font-size:.86rem;display:grid;gap:6px;font-variant-numeric:tabular-nums}
+.lines div{display:flex;justify-content:space-between;gap:12px}
+.lines div span:first-child{color:var(--muted)}
+.totals{display:grid;grid-template-columns:1fr 1fr;gap:12px;border-top:1px dashed var(--line);padding-top:16px}
+.total small{display:block;font-size:.78rem;color:var(--muted);font-family:var(--mono)}
+.total strong{font-family:var(--display);font-size:2.1rem;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.meta{font-size:.9rem;color:var(--muted)}
+.meta b{color:var(--ink)}
+
+/* checkup */
+.check{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:28px;align-items:start}
+@media (max-width:880px){.check{grid-template-columns:1fr}}
+.qs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:560px){.qs{grid-template-columns:1fr}}
+.q{text-align:left;display:flex;gap:12px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:13px 14px;cursor:pointer;font-size:.95rem;line-height:1.35}
+.q .box{flex:none;width:22px;height:22px;border-radius:6px;border:1.5px solid var(--line);display:grid;place-items:center;margin-top:1px;transition:.15s}
+.q .box svg{width:14px;height:14px;stroke:var(--accent-ink);stroke-width:3;fill:none;opacity:0}
+.q[aria-pressed="true"]{border-color:var(--accent)}
+.q[aria-pressed="true"] .box{background:var(--accent);border-color:var(--accent)}
+.q[aria-pressed="true"] .box svg{opacity:1}
+.q:disabled{opacity:.45;cursor:not-allowed}
+.nosite{margin-top:12px;display:flex;gap:10px;align-items:center;font-size:.92rem;color:var(--muted)}
+.nosite input{width:18px;height:18px;accent-color:var(--accent)}
+.score{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:24px;display:grid;gap:14px;justify-items:start}
+.ring{position:relative;width:132px;height:132px}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:12}
+.ring .track{stroke:var(--sunk)}
+.ring .val{stroke:var(--accent);stroke-linecap:round;transition:stroke-dashoffset .5s,stroke .3s}
+.ring .num{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:2.3rem;font-variant-numeric:tabular-nums}
+.ring .num small{font-size:.9rem;color:var(--muted);font-weight:500}
+.pill{font-family:var(--mono);font-size:.78rem;padding:4px 10px;border-radius:99px;border:1px solid currentColor}
+.score h3{font-size:1.5rem}
+.score p{color:var(--muted)}
+.fixes{margin:0;padding-left:18px;color:var(--ink);font-size:.93rem;display:grid;gap:4px}
+
+/* refresh slider */
+.compare{position:relative;height:460px;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);user-select:none;touch-action:pan-y}
+.layer{position:absolute;inset:0;overflow:hidden}
+.old{background:#ffffff;color:#000000;font-family:'Times New Roman',Times,serif;padding:14px;font-size:14px}
+.old .ob{background:#000080;color:#ffff00;text-align:center;font-weight:bold;padding:8px;font-size:clamp(15px,2.4vw,22px)}
+.old .on{text-align:center;padding:6px;font-size:13px}
+.old .on a{color:#0000ee;margin:0 6px}
+.old table{margin:10px auto;border-collapse:collapse;font-size:13px;max-width:100%}
+.old td{border:1px solid #808080;padding:4px 10px}
+.old .uc{text-align:center;color:#ff0000;font-weight:bold;margin:12px 0}
+.old .oc{text-align:center;font-size:11px;color:#555555;margin-top:14px}
+.old p{text-align:center;max-width:520px;margin:8px auto;font-size:13px}
+.new{background:#101820;color:#F3F5F7;font-family:var(--body);clip-path:inset(0 0 0 var(--pos,50%))}
+.new .nn{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;font-size:13px;gap:12px}
+.new .nn b{font-family:var(--display);font-size:17px;white-space:nowrap}
+.new .nn span{opacity:.7;white-space:nowrap}
+.new .nh{padding:20px 24px;display:grid;gap:12px;max-width:640px}
+.new .nh .st{justify-self:start;font-size:12px;font-weight:600;background:rgba(255,255,255,.08);padding:5px 10px;border-radius:99px}
+.new .nh .st::before{content:"● ";color:#3ccf7e}
+.new h3{font-size:clamp(28px,4.6vw,48px);line-height:1;letter-spacing:-.03em}
+.new h3 em{font-style:normal;color:#FFB21A}
+.new .nb{display:flex;gap:10px;flex-wrap:wrap}
+.new .nb span{font-size:13px;font-weight:700;padding:11px 16px;border-radius:10px;background:#FFB21A;color:#101820}
+.new .nb span + span{background:transparent;color:#F3F5F7;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.4)}
+.new .ns{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:10px 24px}
+.new .ns div{background:rgba(255,255,255,.06);border-radius:12px;padding:14px;font-size:13px;min-width:0}
+.new .ns strong{display:block;font-size:18px;font-family:var(--display);color:#FFB21A}
+@media (max-width:560px){.new .ns{grid-template-columns:1fr}.new .nn span{display:none}}
+.divider{position:absolute;top:0;bottom:0;left:var(--pos,50%);width:3px;margin-left:-1.5px;background:#ffffff;box-shadow:0 0 0 1px rgba(0,0,0,.25);pointer-events:none}
+.divider::after{content:"⇆";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:42px;height:42px;border-radius:50%;background:#ffffff;color:#101820;display:grid;place-items:center;font-size:20px;box-shadow:0 4px 14px rgba(0,0,0,.3)}
+.compare input[type=range]{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.tag{position:absolute;top:12px;font-family:var(--mono);font-size:11px;padding:4px 9px;border-radius:6px;background:rgba(0,0,0,.7);color:#ffffff;pointer-events:none;z-index:2}
+.tag.l{left:12px}.tag.r{right:12px}
+.cap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:10px;font-size:.88rem;color:var(--muted)}
+
+.work{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;margin-top:40px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:28px}
+@media (max-width:820px){.work{grid-template-columns:1fr}}
+.work h3{font-size:1.8rem;margin:8px 0 10px}
+.work ul{margin:14px 0 0;padding-left:18px;display:grid;gap:6px;color:var(--muted)}
+.thumb{border-radius:12px;overflow:hidden;background:#1F3A24;color:#F6EFDF;padding:20px;display:grid;gap:12px;min-height:240px;font-family:var(--body)}
+.thumb .tn{display:flex;justify-content:space-between;font-size:12px;opacity:.85}
+.thumb .tn b{font-family:var(--display);font-size:15px}
+.thumb h4{margin:0;font-family:var(--display);font-size:28px;line-height:1;letter-spacing:-.02em}
+.thumb .tk{display:flex;gap:8px;flex-wrap:wrap}
+.thumb .tk span{border:1.5px dashed rgba(246,239,223,.6);border-radius:8px;padding:8px 10px;font-size:12px}
+.thumb .tk strong{display:block;font-size:16px;color:#F2A93B}
+.thumb .live{justify-self:start;font-size:11px;background:rgba(246,239,223,.12);padding:4px 9px;border-radius:99px}
+
+/* faq */
+.faq{display:grid;gap:0;max-width:820px;border-top:1px solid var(--line)}
+details{border-bottom:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;padding:20px 0;display:flex;justify-content:space-between;gap:16px;font-family:var(--display);font-size:1.25rem;font-weight:650}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--mono);color:var(--accent);transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{padding:0 0 20px;color:var(--muted);max-width:65ch}
+
+/* contact */
+.contact{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:28px;align-items:start}
+@media (max-width:880px){.contact{grid-template-columns:1fr}}
+form.card,.side{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:24px;display:grid;gap:14px}
+.err{color:var(--bad);font-size:.88rem;min-height:1.2em}
+.out{background:var(--bg);border:1px dashed var(--line);border-radius:10px;padding:14px;font-family:var(--mono);font-size:.85rem;white-space:pre-wrap;overflow-wrap:anywhere;user-select:all}
+.side h3{font-size:1.4rem}
+.ways{display:grid;gap:10px}
+.way{display:flex;justify-content:space-between;align-items:center;gap:12px;border:1px solid var(--line);border-radius:10px;padding:12px 14px;min-width:0}
+.way div{min-width:0}
+.way small{display:block;font-size:.75rem;color:var(--muted);font-family:var(--mono)}
+.way span.v{font-weight:600;overflow-wrap:anywhere;user-select:all}
+.todo{border:1px dashed var(--warn);color:var(--warn);border-radius:6px;padding:1px 6px;font-family:var(--mono);font-size:.82rem;font-weight:500}
+.mini{border:1px solid var(--line);background:transparent;border-radius:8px;padding:6px 10px;font-size:.82rem;cursor:pointer;white-space:nowrap}
+.mini:hover{background:var(--bg)}
+
+footer{border-top:1px solid var(--line);padding-block:32px 48px;color:var(--muted);font-size:.9rem}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:.9rem;opacity:0;transition:.25s;pointer-events:none;z-index:50}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:880px){.hero{grid-template-columns:1fr;gap:36px;padding-block:36px 48px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="#top"><strong>Ezra Godson</strong><span>web design</span></a>
+    <nav class="links" aria-label="Sections">
+      <a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="#work">Work</a><a href="#faq">FAQ</a>
+    </nav>
+    <button class="icon-btn" id="theme" type="button" aria-label="Switch light or dark mode">
+      <svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+    <a class="btn btn-primary" href="#contact">Get a free demo</a>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <div>
+      <p class="eyebrow">Based in Vancouver, WA · Working with businesses everywhere</p>
+      <h1 style="margin-top:14px">I build your website <span class="hl">before</span> you pay.</h1>
+      <p class="lede">No website yet? I build you a finished sample site for free. If you like it, it goes live for $500. If you don't, you owe nothing.</p>
+      <div class="facts"><span>$500 flat</span><span>Live in about a week</span><span>You own it</span></div>
+
+      <div class="builder" id="demo">
+        <div class="builder-head">
+          <h2>Try it with your business</h2>
+          <span class="eyebrow">updates live →</span>
+        </div>
+        <div class="row">
+          <label class="f">Business name<input type="text" id="d-name" value="Big Cedar Barbers" maxlength="40" autocomplete="off"></label>
+          <label class="f">Type of business
+            <select id="d-type">
+              <option value="barber">Barbershop</option>
+              <option value="food">Food truck</option>
+              <option value="land">Landscaping</option>
+              <option value="clean">House cleaning</option>
+              <option value="detail">Auto detailing</option>
+              <option value="farm">Farm stand</option>
+            </select>
+          </label>
+        </div>
+        <label class="f">City and state<input type="text" id="d-city" value="Vancouver, WA" maxlength="40" autocomplete="off"></label>
+        <div class="f" style="display:grid;gap:7px">
+          <span style="font-size:.82rem;font-weight:600;color:var(--muted)">Style</span>
+          <div class="chips" role="radiogroup" aria-label="Style">
+            <label class="chip"><input type="radio" name="style" id="s-clean" value="clean" checked><span><i style="background:#1f6feb"></i>Clean</span></label>
+            <label class="chip"><input type="radio" name="style" id="s-bold" value="bold"><span><i style="background:#ffcc00"></i>Bold</span></label>
+            <label class="chip"><input type="radio" name="style" id="s-warm" value="warm"><span><i style="background:#c2552d"></i>Warm</span></label>
+            <label class="chip"><input type="radio" name="style" id="s-fresh" value="fresh"><span><i style="background:#1d8a4e"></i>Fresh</span></label>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-primary" type="button" id="claim">I want this one for real</button>
+          <button class="btn btn-ghost" type="button" id="shuffle">Surprise me</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="phone" aria-label="Live preview of the sample website">
+        <div class="screen" id="screen"></div>
+      </div>
+      <p class="stage-note">Scroll inside the phone · open/closed updates live</p>
+    </div>
+  </div>
+
+  <section class="block" id="how">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow"><b>/</b>how-it-works</p>
+        <h2>From "no website" to live in four steps.</h2>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="n">step 1</span><h3>I build a demo</h3><p>I make a real sample of your site using your name, hours and services. It's free, and you don't have to ask for it.</p></div>
+        <div class="step"><span class="n">step 2</span><h3>You look it over</h3><p>We go through it together. Tell me what to change: photos, prices, colors, wording.</p></div>
+        <div class="step"><span class="n">step 3</span><h3>It goes live</h3><p>I connect your domain, set it up to show in Google, and make sure the call button works on every phone.</p></div>
+        <div class="step"><span class="n">step 4</span><h3>I keep it current</h3><p>New hours, a holiday closure or a price change? Text me and it's updated, usually the same day.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="pricing">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow"><b>/</b>pricing</p>
+        <h2>Build your quote.</h2>
+        <p>One flat price for the site, plus a small monthly fee to keep it online and up to date. No surprise invoices.</p>
+      </div>
+      <div class="quote">
+        <div class="opts">
+          <div class="opt locked">
+            <input type="checkbox" checked disabled aria-label="Website included">
+            <div><div class="t">The website</div><div class="d">One page, built for phones, set up for Google search, with tap-to-call and directions</div></div>
+            <span class="p">$500</span>
+          </div>
+          <div class="opt locked">
+            <span></span>
+            <div><div class="t">Extra pages</div><div class="d">$50 each. A separate page for a menu, gallery, team or each service.</div></div>
+            <div class="stepper"><button type="button" id="pg-minus" aria-label="Fewer pages">−</button><output id="pages">0</output><button type="button" id="pg-plus" aria-label="More pages">+</button></div>
+          </div>
+          <p class="opt-group">monthly</p>
+          <label class="opt"><input type="checkbox" id="m-care" checked><div><div class="t">Hosting and updates</div><div class="d">Keeps the site online, plus changes whenever you need them</div></div><span class="p">$40/mo</span></label>
+        </div>
+
+        <aside class="receipt" aria-live="polite">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px"><h3>Your quote</h3><span class="eyebrow" id="q-date"></span></div>
+          <div class="lines" id="q-lines"></div>
+          <div class="totals">
+            <div class="total"><small>today</small><strong id="q-up">$0</strong></div>
+            <div class="total"><small>per month</small><strong id="q-mo">$0</strong></div>
+          </div>
+          <p class="meta">First year total: <b id="q-year">$0</b><br>Ready in about <b id="q-days">0 days</b> after you approve the demo</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn btn-primary" type="button" id="q-send">Send me this quote</button>
+            <button class="btn btn-ghost" type="button" id="q-copy">Copy quote</button>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="block" id="work">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow"><b>/</b>work</p>
+        <h2>Drag to see what a refresh does.</h2>
+        <p>Plenty of small business sites were built ten years ago and never touched again. Here's an example of the kind of change I make.</p>
+      </div>
+      <div class="compare" id="compare">
+        <div class="layer old" aria-hidden="true">
+          <div class="ob">Welcome to Lakeshore Tire &amp; Lube Online!!</div>
+          <div class="on"><a href="#work" tabindex="-1">Home</a>|<a href="#work" tabindex="-1">About Us</a>|<a href="#work" tabindex="-1">Services</a>|<a href="#work" tabindex="-1">Contact Us</a>|<a href="#work" tabindex="-1">Links</a></div>
+          <p>We are a family owned and operated automotive service center serving the community. Please call for pricing on all of our services. Thank you for visiting our web site!</p>
+          <div class="uc">*** SPECIALS PAGE UNDER CONSTRUCTION ***</div>
+          <table><tr><td><b>Hours</b></td><td>Please call for hours</td></tr><tr><td><b>Services</b></td><td>Tires, Oil, Brakes, More</td></tr><tr><td><b>Directions</b></td><td><a href="#work" tabindex="-1">Click HERE for map</a></td></tr></table>
+          <p style="font-size:11px">Best viewed in 800x600 resolution</p>
+          <div class="oc">Copyright © 2011 · Visitors: 004213</div>
+        </div>
+        <div class="layer new" id="newlayer" aria-hidden="true">
+          <div class="nn"><b>Lakeshore Tire &amp; Lube</b><span>Services · Pricing · Hours · Book</span></div>
+          <div class="nh">
+            <span class="st">Open now · closes 6 PM</span>
+            <h3>Tires, oil and brakes. <em>Same day.</em></h3>
+            <div class="nb"><span>Call now</span><span>Book online</span></div>
+          </div>
+          <div class="ns">
+            <div><strong>$49</strong>Full synthetic oil change</div>
+            <div><strong>$25</strong>Tire rotation and balance</div>
+            <div><strong>Free</strong>Brake inspection</div>
+          </div>
+        </div>
+        <div class="divider" id="divider"></div>
+        <span class="tag l">before</span><span class="tag r">after</span>
+        <input type="range" id="pos" min="0" max="100" value="50" aria-label="Drag to compare the old and new website">
+      </div>
+      <div class="cap"><span>Example business, for illustration</span><span>Use arrow keys or drag</span></div>
+    </div>
+  </section>
+
+  <section class="block" id="faq">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow"><b>/</b>questions</p>
+        <h2>Things owners ask me.</h2>
+      </div>
+      <div class="faq">
+        <details><summary>Is the demo really free?</summary><p>Yes. I build it first so you can see exactly what you'd get. If it's not for you, that's the end of it. No contract, no bill.</p></details>
+        <details><summary>Who owns the website?</summary><p>You do. Your domain is registered in your name, and if you ever want to move the site somewhere else, I'll hand over everything.</p></details>
+        <details><summary>What else will I pay for?</summary><p>Just your domain name, which usually runs about $10 to $20 a year. Hosting and updates are covered by the $40 monthly plan.</p></details>
+        <details><summary>How long does it take?</summary><p>Most one-page sites are live about a week after you approve the demo. Each extra page adds about a day.</p></details>
+        <details><summary>Can I make changes myself?</summary><p>You can, but you don't have to. Send me a text or email with the change and I'll take care of it as part of the monthly plan.</p></details>
+        <details><summary>Do you only work in Vancouver?</summary><p>No. I'm based in Vancouver, Washington, but I build sites for businesses anywhere. We can go over your demo by phone or video call, and everything else happens online.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="contact">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow"><b>/</b>contact</p>
+        <h2>Tell me about your business.</h2>
+        <p>Fill this out and I'll get started on your free demo. Copy your message, then send it to me by text or email.</p>
+      </div>
+      <div class="contact">
+        <form class="card" id="cform" novalidate>
+          <div class="row">
+            <label class="f">Your name<input type="text" id="c-name" autocomplete="name" required></label>
+            <label class="f">Business name<input type="text" id="c-biz" autocomplete="organization" required></label>
+          </div>
+          <div class="row">
+            <label class="f">Phone or email<input type="text" id="c-reach" autocomplete="email" required></label>
+            <label class="f">What do you need?
+              <select id="c-need">
+                <option>A new website</option>
+                <option>A redo of my current website</option>
+                <option>Facebook and Instagram ads</option>
+                <option>Not sure yet</option>
+              </select>
+            </label>
+          </div>
+          <label class="f">Anything else?<textarea id="c-msg" placeholder="Hours, services, a site you like the look of..."></textarea></label>
+          <p class="err" id="c-err" role="alert"></p>
+          <button class="btn btn-primary" type="submit" style="justify-self:start">Write my message</button>
+          <div id="c-result" hidden style="display:grid;gap:10px">
+            <div class="out" id="c-out"></div>
+            <button class="btn btn-ghost" type="button" id="c-copy" style="justify-self:start">Copy message</button>
+          </div>
+        </form>
+        <div class="side">
+          <h3>Reach me directly</h3>
+          <div class="ways">
+            <div class="way"><div><small>text or call</small><span class="v" id="w-phone"></span></div><button class="mini" type="button" data-copy="phone">Copy</button></div>
+            <div class="way"><div><small>email</small><span class="v" id="w-email"></span></div><button class="mini" type="button" data-copy="email">Copy</button></div>
+            <div class="way"><div><small>based in</small><span class="v">Vancouver, WA</span></div></div>
+          </div>
+          <p class="meta">I usually reply the same day. Weekends I'm at work, so messages then get an answer Monday.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span>© 2026 Ezra Godson Web Design · Vancouver, Washington</span><span class="mono">Built by hand, tested on phones</span></div></footer>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* ===== Edit your details here ===== */
+const CONFIG = { owner:"Ezra Godson", brand:"Ezra Godson Web Design", phone:"", email:"" };
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const store = {get(k){try{return localStorage.getItem(k)}catch(e){return null}}, set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),2200)}
+async function copyText(text, el){
+  try{await navigator.clipboard.writeText(text);toast('Copied')}
+  catch(e){ if(el){const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r)} toast('Selected. Press copy on your keyboard.') }
+}
+
+/* ===== Theme ===== */
+(function(){
+  const saved=store.get('theme'); if(saved) document.documentElement.dataset.theme=saved;
+  $('#theme').addEventListener('click',()=>{
+    const root=document.documentElement;
+    const dark = root.dataset.theme ? root.dataset.theme==='dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    root.dataset.theme = dark ? 'light' : 'dark'; store.set('theme', root.dataset.theme);
+  });
+})();
+
+/* ===== Demo builder ===== */
+const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const TYPES={
+  barber:{tag:"Fresh cuts, walk-ins welcome",cta:"Book a chair",alt:"Call",title:"Cuts & prices",items:[["Classic cut","$30"],["Skin fade","$35"],["Beard trim","$15"],["Kids cut (12 & under)","$22"]],hours:[null,[9,19],[9,19],[9,19],[9,19],[9,19],[9,17]]},
+  food:{tag:"Street food made to order",cta:"Order ahead",alt:"Today's spot",title:"Menu",items:[["Birria tacos (3)","$12"],["Quesadilla","$11"],["Cup of consommé","$5"],["Horchata","$4"]],hours:[[11,18],null,[11,20],[11,20],[11,20],[11,21],[11,21]]},
+  land:{tag:"Yards that look cared for, all year",cta:"Free estimate",alt:"Call",title:"Services",items:[["Mowing & edging","from $45"],["Fall leaf cleanup","from $150"],["Bark & bed refresh","from $200"],["Hedge trimming","from $80"]],hours:[null,[7,17],[7,17],[7,17],[7,17],[7,17],[8,14]]},
+  clean:{tag:"Come home to a clean house",cta:"Get a quote",alt:"Call",title:"Cleaning packages",items:[["Standard clean","from $120"],["Deep clean","from $220"],["Move-out clean","from $280"],["Inside the fridge","+$30"]],hours:[null,[8,18],[8,18],[8,18],[8,18],[8,18],[9,15]]},
+  detail:{tag:"Showroom shine in your own driveway",cta:"Book a detail",alt:"Call",title:"Packages",items:[["Express wash","$60"],["Interior detail","$150"],["Full detail","$250"],["Ceramic coating","from $600"]],hours:[null,[8,18],[8,18],[8,18],[8,18],[8,18],[8,16]]},
+  farm:{tag:"Picked this week, sold at the stand",cta:"Plan a visit",alt:"Directions",title:"At the stand",items:[["U-pick berries","$4/lb"],["Farm eggs","$7/dozen"],["Raw honey","$12"],["Pumpkins","from $5"]],hours:[[10,17],null,null,[10,18],[10,18],[10,18],[9,18]]}
+};
+const STYLES={
+  clean:{bg:"#ffffff",fg:"#16181d",accent:"#1f6feb",soft:"#eef3fb",on:"#ffffff",font:"'Geist',system-ui,sans-serif"},
+  bold:{bg:"#111214",fg:"#f4f4f2",accent:"#ffcc00",soft:"#202226",on:"#111214",font:"'Geist',system-ui,sans-serif"},
+  warm:{bg:"#fbf5ec",fg:"#2a1d14",accent:"#c2552d",soft:"#f1e4d3",on:"#ffffff",font:"Georgia,'Times New Roman',serif"},
+  fresh:{bg:"#f3faf5",fg:"#10261a",accent:"#1d8a4e",soft:"#dcefe2",on:"#ffffff",font:"'Geist',system-ui,sans-serif"}
+};
+const SAMPLES=[["Big Cedar Barbers","barber","Vancouver, WA","clean"],["Taqueria El Puente","food","Phoenix, AZ","bold"],["Greenline Yard Care","land","Boise, ID","fresh"],["Sparkle & Co. Cleaning","clean","Sacramento, CA","warm"],["Mirror Finish Detailing","detail","Dallas, TX","bold"],["Red Barn Berry Stand","farm","Spokane, WA","warm"]];
+
+function fmtH(h){const m=Math.round((h%1)*60);const hh=Math.floor(h)%12||12;return hh+(m?':'+String(m).padStart(2,'0'):'')+(Math.floor(h)<12?' AM':' PM')}
+function pacificNow(){
+  const parts=Object.fromEntries(new Intl.DateTimeFormat('en-US',{timeZone:'America/Los_Angeles',weekday:'short',hour:'numeric',minute:'numeric',hourCycle:'h23'}).formatToParts(new Date()).map(p=>[p.type,p.value]));
+  return {d:DAYS.indexOf(parts.weekday),h:(+parts.hour)%24+(+parts.minute)/60};
+}
+function status(hours){
+  const n=pacificNow(),t=hours[n.d];
+  if(t&&n.h>=t[0]&&n.h<t[1]) return {on:true,text:'Open now · closes '+fmtH(t[1])};
+  for(let i=0;i<8;i++){const d=(n.d+i)%7,h=hours[d]; if(!h) continue; if(i===0&&n.h>=h[0]) continue;
+    return {on:false,text:'Closed · opens '+(i===0?'today':i===1?'tomorrow':DAYS[d])+' '+fmtH(h[0])}}
+  return {on:false,text:'Closed'};
+}
+function renderDemo(){
+  const name=$('#d-name').value.trim()||'Your Business';
+  const city=$('#d-city').value.trim();
+  const t=TYPES[$('#d-type').value];
+  const st=STYLES[(document.querySelector('input[name=style]:checked')||{}).value||'clean'];
+  const scr=$('#screen');
+  Object.entries({'--m-bg':st.bg,'--m-fg':st.fg,'--m-accent':st.accent,'--m-soft':st.soft,'--m-on':st.on}).forEach(([k,v])=>scr.style.setProperty(k,v));
+  const s=status(t.hours), today=pacificNow().d;
+  const slug=(name.toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]/g,'')||'yourbusiness')+'.com';
+  const order=[1,2,3,4,5,6,0];
+  scr.innerHTML=`
+    <div class="urlbar"><div>${esc(slug)}</div></div>
+    <div class="m-nav"><b style="font-family:${st.font}">${esc(name)}</b><span class="m-burger"><i></i><i></i><i></i></span></div>
+    <div class="m-hero">
+      <span class="m-status ${s.on?'on':''}">${s.text}</span>
+      <h3 style="font-family:${st.font}">${esc(name)}</h3>
+      <p>${t.tag}${city?' in '+esc(city):''}.</p>
+      <div class="m-btns"><span class="m-btn">${t.cta}</span><span class="m-btn alt">${t.alt}</span></div>
+    </div>
+    <div class="m-sec"><h4 style="font-family:${st.font}">${t.title}</h4>
+      <ul class="m-list">${t.items.map(([a,b])=>`<li><span>${a}</span><span>${b}</span></li>`).join('')}</ul>
+      <small>Sample prices. Yours go here.</small></div>
+    <div class="m-sec"><h4 style="font-family:${st.font}">Hours</h4>
+      <div class="m-hours">${order.map(d=>{const h=t.hours[d];const c=d===today?' class="today"':'';return `<span${c}>${DAYS[d]}</span><span${c}>${h?fmtH(h[0])+' – '+fmtH(h[1]):'Closed'}</span>`}).join('')}</div></div>
+    <div class="m-sec"><h4 style="font-family:${st.font}">Find us</h4><p style="font-size:13px;opacity:.8">${esc(city||'Your city')}</p><div class="m-map"></div></div>
+    <div class="m-foot">© 2026 ${esc(name)}</div>`;
+}
+['#d-name','#d-city','#d-type'].forEach(s=>$(s).addEventListener('input',renderDemo));
+document.querySelectorAll('input[name=style]').forEach(r=>r.addEventListener('change',renderDemo));
+let si=0;
+$('#shuffle').addEventListener('click',()=>{si=(si+1)%SAMPLES.length;const [n,t,c,s]=SAMPLES[si];$('#d-name').value=n;$('#d-type').value=t;$('#d-city').value=c;document.getElementById('s-'+s).checked=true;renderDemo();$('#screen').scrollTop=0});
+$('#claim').addEventListener('click',()=>{
+  $('#c-biz').value=$('#d-name').value.trim();
+  const typeLabel=$('#d-type').selectedOptions[0].textContent.toLowerCase();
+  if(!$('#c-msg').value) $('#c-msg').value=`I'd like a site like the ${$('#d-type').selectedOptions[0].textContent} demo, in the ${(document.querySelector('input[name=style]:checked')||{}).value} style. We're a ${typeLabel} in ${$('#d-city').value.trim()||'my city'}.`;
+  $('#c-need').value='A new website'; saveDraft();
+  document.getElementById('contact').scrollIntoView({behavior:'smooth'}); setTimeout(()=>$('#c-name').focus({preventScroll:true}),500);
+});
+renderDemo(); setInterval(renderDemo,60000);
+
+/* ===== Quote ===== */
+const PRICES={base:500,page:50,care:40};
+let pages=0;
+const money=n=>'$'+n.toLocaleString('en-US');
+function quote(){
+  const on=id=>$(id).checked;
+  const lines=[['Website',PRICES.base]];
+  if(pages) lines.push([`Extra pages × ${pages}`,pages*PRICES.page]);
+  const monthly=[]; if(on('#m-care')) monthly.push(['Hosting and updates',PRICES.care]);
+  const up=lines.reduce((a,l)=>a+l[1],0), mo=monthly.reduce((a,l)=>a+l[1],0);
+  const days=5+pages;
+  return {lines,monthly,up,mo,year:up+mo*12,days};
+}
+function renderQuote(){
+  const q=quote();
+  $('#pages').textContent=pages;
+  $('#q-lines').innerHTML=q.lines.map(([a,b])=>`<div><span>${a}</span><span>${money(b)}</span></div>`).join('')+q.monthly.map(([a,b])=>`<div><span>${a}</span><span>${money(b)}/mo</span></div>`).join('');
+  $('#q-up').textContent=money(q.up); $('#q-mo').textContent=money(q.mo);
+  $('#q-year').textContent=money(q.year); $('#q-days').textContent=q.days+' days';
+}
+function quoteText(){const q=quote();return `Website quote from ${CONFIG.brand}\n`+q.lines.map(([a,b])=>`- ${a}: ${money(b)}`).join('\n')+(q.monthly.length?'\n'+q.monthly.map(([a,b])=>`- ${a}: ${money(b)}/month`).join('\n'):'')+`\nDue today: ${money(q.up)}\nMonthly: ${money(q.mo)}\nFirst year: ${money(q.year)}\nReady in about ${q.days} days after the demo is approved.`}
+$('#q-date').textContent=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+$('#pg-minus').addEventListener('click',()=>{pages=Math.max(0,pages-1);renderQuote()});
+$('#pg-plus').addEventListener('click',()=>{pages=Math.min(8,pages+1);renderQuote()});
+document.querySelectorAll('.opts input[type=checkbox]').forEach(c=>c.addEventListener('change',renderQuote));
+$('#q-copy').addEventListener('click',()=>copyText(quoteText()));
+$('#q-send').addEventListener('click',()=>{const m=$('#c-msg');m.value=(m.value?m.value+'\n\n':'')+quoteText();saveDraft();document.getElementById('contact').scrollIntoView({behavior:'smooth'})});
+renderQuote();
+
+
+/* ===== Before / after ===== */
+const pos=$('#pos'), cmp=$('#compare');
+function setPos(v){cmp.style.setProperty('--pos',v+'%')}
+pos.addEventListener('input',e=>setPos(e.target.value)); setPos(50);
+
+/* ===== Contact ===== */
+function setWay(id,val,label){$(id).innerHTML=val?esc(val):`<span class="todo">add your ${label}</span>`}
+setWay('#w-phone',CONFIG.phone,'phone'); setWay('#w-email',CONFIG.email,'email');
+document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',()=>{const v=CONFIG[b.dataset.copy];v?copyText(v):toast('Not added yet')}));
+const FIELDS=['c-name','c-biz','c-reach','c-need','c-msg'];
+function saveDraft(){store.set('draft',JSON.stringify(Object.fromEntries(FIELDS.map(f=>[f,document.getElementById(f).value]))))}
+try{const d=JSON.parse(store.get('draft')||'null'); if(d) FIELDS.forEach(f=>{if(d[f]) document.getElementById(f).value=d[f]})}catch(e){}
+FIELDS.forEach(f=>document.getElementById(f).addEventListener('input',saveDraft));
+$('#cform').addEventListener('submit',e=>{
+  e.preventDefault();
+  const v=Object.fromEntries(FIELDS.map(f=>[f,document.getElementById(f).value.trim()]));
+  const missing=[!v['c-name']&&'your name',!v['c-biz']&&'your business name',!v['c-reach']&&'a phone number or email'].filter(Boolean);
+  if(missing.length){$('#c-err').textContent='Add '+missing.join(', ')+' so I can reach you.';return}
+  $('#c-err').textContent='';
+  $('#c-out').textContent=`Hi Ezra, I'm ${v['c-name']} from ${v['c-biz']}. I'm interested in: ${v['c-need'].toLowerCase()}.${v['c-msg']?'\n\n'+v['c-msg']:''}\n\nYou can reach me at ${v['c-reach']}.`;
+  $('#c-result').hidden=false; toast('Message ready to copy');
+});
+$('#c-copy').addEventListener('click',()=>copyText($('#c-out').textContent,$('#c-out')));
+</script>
+
+</body>
+</html>
